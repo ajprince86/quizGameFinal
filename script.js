@@ -48,6 +48,13 @@ function addCategorie(categorie) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        card.setAttribute("data-question", data.results[0].question);
+        card.setAttribute("data-wrong", data.results[0].incorrect_answers[0]);
+        card.setAttribute("data-wrong", data.results[0].incorrect_answers[1]);
+        card.setAttribute("data-wrong", data.results[0].incorrect_answers[2]);
+        card.setAttribute("data-correct", data.results[0].correct_answer);
+
+        card.setAttribute("data-value", card.getInnerHTML());
       });
   });
 }
