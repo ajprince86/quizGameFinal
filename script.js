@@ -136,7 +136,10 @@ function getResult() {
     console.log(`Correct My guy`);
     // score = score + parseInt(cardOfButton.getAttribute("data-value")); // add points to score based on the value of the question
     score += parseInt(cardOfButton.getAttribute("data-value")); // if you got the correct answer we are adding the data-value attribute for that question into the score total.
-    playerOneScore.innerHTML = score;
+    console.log(playerOne.classList.contains("player--active"));
+    playerOne.classList.contains("player--active")
+      ? (playerOne.innerHTML = score)
+      : (playerTwo.innerHTML = score);
     cardOfButton.classList.add("correct_answer");
     console.log(cardOfButton.firstChild); // checking for first child which is display 200
     //How to stop the correct answer from being pressed multiple times?
@@ -152,7 +155,10 @@ function getResult() {
   } else {
     console.log("wrong");
     score -= parseInt(cardOfButton.getAttribute("data-value")); // subtracting same value if incorrect
-    playerOneScore.innerHTML = score;
+    playerOne.classList.contains("player--active")
+      ? (playerOne.innerHTML = score)
+      : (playerTwo.innerHTML = score);
+    // playerOneScore.innerHTML = score;
     cardOfButton.classList.add("wrong_answer");
     setTimeout(() => {
       while (cardOfButton.firstChild) {
