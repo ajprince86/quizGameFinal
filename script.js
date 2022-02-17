@@ -9,31 +9,29 @@ const playerOneScore = document.querySelector("#score-1"); //score p1
 const playerTwoScore = document.querySelector("#score-2"); // score p2
 let score = 0;
 const playerScoreTwo = document.querySelector("#scoreTwo");
-
-let scores = 0;
+const wrongAnswerLimit = 3;
+let scores = [];
 let activePlayer;
 let playing;
 
+let playerOneFinalScore = 0;
+let playerTwoFinalScore = 0;
+
 //==========STARTING THE GAME=========//
-// const startGame = function () {
-//   scores = [0, 0];
-//   currentScore = 0;
-//   activePlayer = 0;
-//   playing = true;
-//   playerOneScore.textContent = 0;
-//   playerTwoScore.textContent = 0;
-//   playerOne.classList.remove("player--winner");
-//   playerTwo.classList.remove("player--winner");
-//   playerOne.classList.add("player--active");
-//   playerTwo.classList.remove("player--active");
-//   //Did not add current.textcontent
-// };
+const startGame = function () {
+  playerOneScore.textContent = 0;
+  playerTwoScore.textContent = 0;
+  playerOne.classList.remove("player--winner");
+  playerTwo.classList.remove("player--winner");
+  playerOne.classList.add("player--active");
+  playerTwo.classList.remove("player--active");
+};
 
 const switchPlayer = function () {
   playerOne.classList.remove("player--active");
   playerTwo.classList.add("player--active");
 };
-switchPlayer();
+// switchPlayer();
 
 const categories = [
   {
@@ -98,7 +96,7 @@ function showCard() {
   console.log(this);
   console.log(this.innerHTML);
   this.innerHTML = ``;
-  this.style.fontSize = this.style.fontSize = `18px`;
+  this.style.fontSize = this.style.fontSize = `16px`; //when card is clicked minimize font size
   console.log("clicked");
   const display = document.createElement("div");
   const buttonOne = document.createElement("button");
@@ -138,8 +136,8 @@ function getResult() {
     score += parseInt(cardOfButton.getAttribute("data-value")); // if you got the correct answer we are adding the data-value attribute for that question into the score total.
     console.log(playerOne.classList.contains("player--active"));
     playerOne.classList.contains("player--active")
-      ? (playerOne.innerHTML = score)
-      : (playerTwo.innerHTML = score);
+      ? (playerOneScore.textContent = score)
+      : (playerTwoScore.textContent = score);
     cardOfButton.classList.add("correct_answer");
     console.log(cardOfButton.firstChild); // checking for first child which is display 200
     //How to stop the correct answer from being pressed multiple times?
@@ -156,9 +154,9 @@ function getResult() {
     console.log("wrong");
     score -= parseInt(cardOfButton.getAttribute("data-value")); // subtracting same value if incorrect
     playerOne.classList.contains("player--active")
-      ? (playerOne.innerHTML = score)
-      : (playerTwo.innerHTML = score);
-    // playerOneScore.innerHTML = score;
+      ? (playerOneScore.textContent = score)
+      : (playerTwoScore.textContent = score);
+    // whoever is current will be credited with the points
     cardOfButton.classList.add("wrong_answer");
     setTimeout(() => {
       while (cardOfButton.firstChild) {
@@ -169,4 +167,35 @@ function getResult() {
   }
   cardOfButton.removeEventListener("click", showCard);
   console.log(allCards);
+  setTimeout(() => {
+    if (playerOne.classList.contains("player--active")) {
+      alert("Switching to player Two");
+      switchPlayer();
+    } else
+      setTimeout(() => {
+        alert("End of game");
+      }, 20000);
+  }, 10000);
+  setTimeout(() => {
+    if (
+      parseInt(playerOneScore.textContent) <
+      parseInt(playerTwoScore.textContent)
+    ) {
+      playerTwo.classList.add("player--winner");
+      alert("Player Two has won the game");
+    } else {
+      playerOne.classList.add("player--winner");
+      alert("Player One has won the game!!");
+    }
+  }, 25000);
 }
+
+// switchPlayer();
+async function sendRequest() {
+  let response = await axios.get(
+    `https://api.giphy.com/v1/gifs/search?api_key=y0hteurxciv3sviKLqKWkhSl0ENXlBJs&q=sad&limit=25&offset=0&rating=g&lang=en`
+  );
+  let data = response.data;
+  console.log(data);
+}
+sendRequest();

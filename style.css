@@ -10,7 +10,7 @@ html {
 }
 
 h2 {
-  color: yellow;
+  color: black;
 }
 
 body {
@@ -21,23 +21,36 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  color: green;
+  color: yellow;
 }
 
 .player--1 {
+  /* background-image: url(Images/cam-newton.jpeg);
+  background-position: center; */
   width: 300px;
   height: 300px;
   background-color: blue;
+  color: black;
+  text-align: center;
 }
 
+img {
+  height: 100px;
+  width: 100px;
+}
 .player--2 {
+  /* background-image: url(images/number2.jpeg);
+  background-position: center; */
   width: 300px;
   height: 300px;
   background-color: purple;
+  color: black;
+  text-align: center;
 }
 
 .player--active {
   background-color: white;
+  box-shadow: 12px 12px 2px 1px yellow;
 }
 
 .categories_column {
@@ -51,10 +64,10 @@ body {
   height: 200px;
   border: solid blue 2px;
   border-radius: 10px;
-  background-color: white;
+  background-color: blue;
   text-align: center;
   padding: 5px;
-  font-size: 50px;
+  font-size: 60px;
   margin: 10px;
   box-shadow: 10px 5px 5px red;
 }
@@ -68,7 +81,7 @@ body {
 }
 
 .player--winner {
-  background-color: pink;
+  background-color: gold;
 }
 
 /* //   if (cardOfButton.getAttribute("data-correct") === this.innerHTML) {
