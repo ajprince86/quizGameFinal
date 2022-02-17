@@ -7,17 +7,12 @@ const playerOne = document.querySelector(".player--1"); //section for p1
 const playerTwo = document.querySelector(".player--2"); //section for p2
 const playerOneScore = document.querySelector("#score-1"); //score p1
 const playerTwoScore = document.querySelector("#score-2"); // score p2
+let playerOneFinalScore = 0;
+let playerTwoFinalScore = 0;
 let score = 0;
 const playerScoreTwo = document.querySelector("#scoreTwo");
 const wrongAnswerLimit = 3;
-let scores = [];
-let activePlayer;
-let playing;
 
-let playerOneFinalScore = 0;
-let playerTwoFinalScore = 0;
-
-//==========STARTING THE GAME=========//
 const startGame = function () {
   playerOneScore.textContent = 0;
   playerTwoScore.textContent = 0;
@@ -31,6 +26,10 @@ const switchPlayer = function () {
   playerOne.classList.remove("player--active");
   playerTwo.classList.add("player--active");
 };
+
+//==========STARTING THE GAME=========//
+startButton.addEventListener("click", startGame);
+
 // switchPlayer();
 
 const categories = [
@@ -54,6 +53,16 @@ const categories = [
 ];
 
 const levels = ["easy", "medium", "hard"];
+
+function shuffleArray(array) {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+}
 
 function addCategorie(categorie) {
   const column = document.createElement("div");
@@ -103,10 +112,18 @@ function showCard() {
   const buttonTwo = document.createElement("button");
   const buttonThree = document.createElement("button");
   const buttonFour = document.createElement("button");
-  buttonOne.innerHTML = this.getAttribute("data-wrong-0");
-  buttonTwo.innerHTML = this.getAttribute("data-wrong-1");
-  buttonThree.innerHTML = this.getAttribute("data-wrong-2");
-  buttonFour.innerHTML = this.getAttribute("data-correct");
+  let buttonsArray = [
+    "data-wrong-0",
+    "data-wrong-1",
+    "data-wrong-2",
+    "data-correct",
+  ];
+  shuffleArray(buttonsArray);
+  console.log(buttonsArray);
+  buttonOne.innerHTML = this.getAttribute(buttonsArray[0]);
+  buttonTwo.innerHTML = this.getAttribute(buttonsArray[1]);
+  buttonThree.innerHTML = this.getAttribute(buttonsArray[2]);
+  buttonFour.innerHTML = this.getAttribute(buttonsArray[3]);
   buttonOne.addEventListener("click", getResult);
   buttonTwo.addEventListener("click", getResult);
   buttonThree.addEventListener("click", getResult);
@@ -131,7 +148,7 @@ function getResult() {
   const cardOfButton = this.parentElement; // card of button is equal to the parent element of the button that is clicked which is the card div
   console.log(cardOfButton); // the card div
   if (cardOfButton.getAttribute("data-correct") === this.innerHTML) {
-    console.log(`Correct My guy`);
+    console.log(`Correct`);
     // score = score + parseInt(cardOfButton.getAttribute("data-value")); // add points to score based on the value of the question
     score += parseInt(cardOfButton.getAttribute("data-value")); // if you got the correct answer we are adding the data-value attribute for that question into the score total.
     console.log(playerOne.classList.contains("player--active"));
